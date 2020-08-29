@@ -21,7 +21,3 @@ set nowrap
 set hidden
 set ruler
 set shortmess+=c
-
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
