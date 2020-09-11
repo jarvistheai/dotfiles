@@ -182,13 +182,15 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -lH'
-alias la='ls -laH'
-alias l='ls -CF'
+alias ls='ls -G'
+alias ll='ls -lhG'
+alias la='ls -lahG'
+alias l='ls -CFG'
 alias cl='clear'
 alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
+alias cat='bat --theme=ansi-dark'
 
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
