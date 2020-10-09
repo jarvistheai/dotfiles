@@ -1,6 +1,8 @@
 syntax on
 
-set guicursor=
+set nocompatible
+set showcmd
+" set guicursor=
 set noerrorbells
 set tabstop=4 softtabstop=4
 set shiftwidth=4
@@ -24,20 +26,12 @@ set shortmess+=c
 
 set updatetime=50
 filetype plugin on
-set nocompatible
 set laststatus=2
 
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
-
-function! StatuslineGit()
-    let l:branchname = GitBranch()
-    return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
+" quick save
+noremap <Leader>s :update<CR>
 
 set statusline=
-set statusline+=%{StatuslineGit()}
 set statusline+=\ %f
 set statusline+=\ %m
 set statusline+=%=
@@ -94,3 +88,6 @@ let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
+
+" souring the coc config file
+source ~/.vim/coc.vim
