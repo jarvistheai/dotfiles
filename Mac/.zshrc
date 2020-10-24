@@ -190,7 +190,12 @@ alias cl='clear'
 alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
-alias cat='bat --theme=ansi-dark'
+alias bat='bat --theme=ansi-dark'
+
+# fetch custom aliases
+if [ -f /Users/jarvis/.aliases ]; then
+    . /Users/jarvis/.aliases
+fi
 
 # enable auto-suggestions based on the history
 if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
