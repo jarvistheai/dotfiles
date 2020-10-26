@@ -152,3 +152,10 @@ function! SourceIfExists(file)
 endfunction
 
 call SourceIfExists("~/.config/nvim/coc.vim")
+
+call plug#begin()
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'sheerun/vim-polyglot'
+Plug 'rust-lang/rust.vim'
+Plug 'preservim/nerdtree'
+call plug#end()
