@@ -18,7 +18,7 @@ set undofile
 set incsearch
 set relativenumber
 set scrolloff=8
-set cmdheight=1
+set cmdheight=2
 set nowrap
 set hidden
 set ruler
@@ -31,6 +31,20 @@ let g:mapleader = "\<Space>"
 set updatetime=50
 filetype plugin on
 set laststatus=2
+
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+" Gruvbox colorscheme
+let g:gruvbox_contrast_dark = 'hard'
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+let g:gruvbox_invert_selection='0'
+
+colorscheme gruvbox
+set background=dark
 
 " quick save
 "nnoremap <Leader>s :update<CR>
@@ -46,15 +60,6 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <Leader>o o<Esc>
 nnoremap <Leader>O O<Esc>
 
-" vi movement keys in insert mode
-inoremap <A-h> <C-o>h
-inoremap <A-j> <C-o>j
-inoremap <A-k> <C-o>k
-inoremap <A-l> <C-o>l
-inoremap <A-w> <C-o>w
-inoremap <A-e> <C-o>e
-inoremap <A-b> <C-o>b
-
 "Nerdtree
 let NERDTreeShowHidden=1
 autocmd StdinReadPre * let s:std_in=1
@@ -65,6 +70,9 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Emmet Leader key
+let g:user_emmet_leader_key=','
 
 "Buffers
 nnoremap <leader>n :bn<CR>
@@ -163,11 +171,20 @@ function! SourceIfExists(file)
   endif
 endfunction
 
+"COC-Configuration and shortcuts
 call SourceIfExists("~/.config/nvim/coc.vim")
+
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
+
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'sheerun/vim-polyglot'
 Plug 'rust-lang/rust.vim'
 Plug 'preservim/nerdtree'
+Plug 'mattn/emmet-vim'
+Plug 'gruvbox-community/gruvbox'
+Plug 'phanviet/vim-monokai-pro'
 call plug#end()
