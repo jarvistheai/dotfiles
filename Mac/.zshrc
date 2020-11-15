@@ -192,6 +192,12 @@ alias py='python3'
 alias lolfetch='neofetch | lolcat'
 alias bat='bat --theme=ansi-dark'
 
+# browser-sync config
+# get the current local IP adress
+# export SERVER_IP=`ipconfig getifaddr en0`
+# the command alias to start the browser-sync server
+alias serve="browser-sync start --server --files . --no-notify --port 9000"
+
 # fetch custom aliases
 if [ -f /Users/jarvis/.aliases ]; then
     . /Users/jarvis/.aliases

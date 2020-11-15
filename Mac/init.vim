@@ -10,7 +10,7 @@ set expandtab
 set smartindent
 set nu
 set linebreak
-set smartcase
+set ignorecase smartcase
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
@@ -26,6 +26,21 @@ set shortmess+=c
 "set splitbelow
 set splitright
 
+call plug#begin()
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'sheerun/vim-polyglot'
+Plug 'rust-lang/rust.vim'
+Plug 'preservim/nerdtree'
+Plug 'mattn/emmet-vim'
+Plug 'phanviet/vim-monokai-pro'
+Plug 'gruvbox-community/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+call plug#end()
+
 let g:mapleader = "\<Space>"
 
 set updatetime=50
@@ -37,6 +52,7 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Gruvbox colorscheme
 let g:gruvbox_contrast_dark = 'hard'
+
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -45,13 +61,6 @@ let g:gruvbox_invert_selection='0'
 
 colorscheme gruvbox
 set background=dark
-
-" quick save
-"nnoremap <Leader>s :update<CR>
-
-"Close file
-"nnoremap <leader>q :q<CR>
-"nnoremap <leader>qq :q!<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
@@ -74,11 +83,63 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Emmet Leader key
 let g:user_emmet_leader_key=','
 
+" Airline config
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#coc#enabled = 1
+let airline#extensions#coc#error_symbol = 'E:'
+let airline#extensions#coc#warning_symbol = 'W:'
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰ '
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇ '
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ '
+let g:airline_symbols.notexists = 'Ɇ '
+let g:airline_symbols.whitespace = 'Ξ'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰ '
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.dirty='⚡'
+
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_detect_crypt=1
+let g:airline_detect_spell=1
+let g:airline_detect_spelllang=1
+let g:airline_detect_iminsert=0
+let g:airline_inactive_collapse=1
+let g:airline_inactive_alt_sep=1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
 "Buffers
 nnoremap <leader>n :bn<CR>
 nnoremap <leader>p :bp<CR>
-nnoremap <leader>bdd :bd!<CR>
-nnoremap <leader>bd :bd<CR>
 
 "Window switching
 nnoremap <leader>h :wincmd h<CR>
@@ -101,21 +162,22 @@ nnoremap <Leader>] :vertical resize +5<CR>
 nnoremap <Leader>[ :vertical resize -5<CR>
 nnoremap <leader>} :resize +5<CR>
 nnoremap <leader>{ :resize -5<CR>
+nnoremap <leader>r :resize 30<CR>
 
 "Splitting windows
 noremap <Leader>- :<C-u>split<CR>
 noremap <Leader>\ :<C-u>vsplit<CR>
 
-set statusline=
-set statusline+=\ %f
-set statusline+=\ %m
-set statusline+=%=
-set statusline+=\ %y
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\ [%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\ 
+" set statusline=
+" set statusline+=\ %f
+" set statusline+=\ %m
+" set statusline+=%=
+" set statusline+=\ %y
+" set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+" set statusline+=\ [%{&fileformat}\]
+" set statusline+=\ %p%%
+" set statusline+=\ %l:%c
+" set statusline+=\ 
 
 " FINDING FILES:
 " Search down into subfolders
@@ -179,12 +241,3 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-call plug#begin()
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'sheerun/vim-polyglot'
-Plug 'rust-lang/rust.vim'
-Plug 'preservim/nerdtree'
-Plug 'mattn/emmet-vim'
-Plug 'gruvbox-community/gruvbox'
-Plug 'phanviet/vim-monokai-pro'
-call plug#end()
