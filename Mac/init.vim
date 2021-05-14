@@ -1,16 +1,15 @@
-syntax on
+syntax enable
 
 set nocompatible
 set showcmd
 " set guicursor=
 set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
+setglobal tabstop=4 softtabstop=4
+setglobal shiftwidth=4
 set expandtab
 set smartindent
 set nu
 set linebreak
-set ignorecase smartcase
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
@@ -25,6 +24,18 @@ set ruler
 set shortmess+=c
 "set splitbelow
 set splitright
+set cursorcolumn
+set cursorline
+set noignorecase
+map <esc> :noh<CR>
+
+"Find and replace word under cursor
+noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
+
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,space:.
+set list
+"Toggle set list on/off
+noremap <F5> :set list!<CR>
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -39,12 +50,19 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdcommenter'
 call plug#end()
 
 let g:mapleader = "\<Space>"
 
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" RustFmt config
+let g:rustfmt_autosave = 1
+
 set updatetime=50
-filetype plugin on
+filetype plugin indent on
 set laststatus=2
 
 set colorcolumn=80
@@ -83,6 +101,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Emmet Leader key
 let g:user_emmet_leader_key=','
 
+" Emmet enable only for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
 " Airline config
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -112,7 +134,7 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.paste = 'Þ'
 let g:airline_symbols.paste = '∥'
 let g:airline_symbols.spell = 'Ꞩ '
-let g:airline_symbols.notexists = 'Ɇ '
+let g:airline_symbols.notexists = ' Ɇ'
 let g:airline_symbols.whitespace = 'Ξ'
 
 " powerline symbols
@@ -124,7 +146,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰ '
 let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.dirty='⚡'
+let g:airline_symbols.dirty=' ⚡'
 
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
@@ -136,6 +158,9 @@ let g:airline_inactive_collapse=1
 let g:airline_inactive_alt_sep=1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+"sudo save
+command! -nargs=0 Sw w !sudo tee % > /dev/null
 
 "Buffers
 nnoremap <leader>n :bn<CR>

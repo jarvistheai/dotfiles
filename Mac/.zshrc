@@ -1,7 +1,7 @@
 # ~/.zshrc file for zsh non-login shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
-setopt autocd              # change directory just by typing its name
+#setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
 setopt ksharrays           # arrays start at 0
@@ -12,6 +12,11 @@ setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
+
+export EDITOR='vim --clean'
+
+#LANG variable
+export LANG=en_US.UTF-8
 
 # hide EOL sign ('%')
 export PROMPT_EOL_MARK=""
@@ -37,6 +42,15 @@ autoload -Uz compinit
 compinit -d ~/.zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+zmodload zsh/complist
+_comp_options+=(globdots)
+
+# use vim keys in tab completion menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -83,10 +97,14 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats ' in branch %F{%(#.blue.green)}%b'
 
-
+# Python3 version
+py3v precmd() { python3 --version }
+ 
+# Rust version
+rustv precmd() { rustc --version | cut -d ' ' -f 2 }
 
 if [ "$color_prompt" = yes ]; then
-    PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+	PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]-(%F{reset}$(py3v)%F{%(#.blue.green)})-(%F{reset}Rust $(rustv)%F{%(#.blue.green)})\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
     # enable syntax-highlighting
@@ -191,6 +209,7 @@ alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
 alias bat='bat --theme=ansi-dark'
+alias hot='sudo powermetrics --sampler smc | grep -i "CPU die temperature"'
 
 # browser-sync config
 # get the current local IP adress
