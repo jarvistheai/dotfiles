@@ -180,7 +180,7 @@ tnoremap <leader>l <C-\><C-n> :wincmd l<CR>
 tnoremap <leader>q <C-\><C-n>
 
 "Open terminal
-nnoremap <leader>t :belowright 17sp term://zsh<CR>
+nnoremap <leader>t :belowright 25sp term://zsh<CR>
 
 "Resizing Window
 nnoremap <Leader>] :vertical resize +5<CR>

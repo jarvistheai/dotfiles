@@ -95,7 +95,7 @@ autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats ' in branch %F{%(#.blue.green)}%b'
+zstyle ':vcs_info:git:*' formats ' in branch %B%F{%(#.yellow.yellow)}%b'
 
 # Python3 version
 py3v precmd() { python3 --version }
@@ -104,7 +104,9 @@ py3v precmd() { python3 --version }
 rustv precmd() { rustc --version | cut -d ' ' -f 2 }
 
 if [ "$color_prompt" = yes ]; then
-	PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]-(%F{reset}$(py3v)%F{%(#.blue.green)})-(%F{reset}Rust $(rustv)%F{%(#.blue.green)})\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+	#PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]-(%F{reset}$(py3v)%F{%(#.blue.green)})-(%F{reset}Rust $(rustv)%F{%(#.blue.green)})\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+    #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
+	PROMPT=$'%F{%(#.blue.blue)}┌──(%B%F{%(#.red.yellow)}%n%(#.@.㉿)%m%b%F{%(#.blue.blue)})-[%B%F{cyan}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.blue)}]-(%F{reset}$(py3v)%F{%(#.blue.blue)})-(%B%F{red}Rust $(rustv)%b%F{%(#.blue.blue)})\$vcs_info_msg_0_\n%F{%(#.blue.blue)}└─%B%(#.%F{red}#.%F{yellow}$)%b%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
     # enable syntax-highlighting
@@ -209,7 +211,9 @@ alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
 alias bat='bat --theme=ansi-dark'
-alias hot='sudo powermetrics --sampler smc | grep -i "CPU die temperature"'
+alias hot='sudo powermetrics -n 1 -i 1 --sampler thermal,smc | grep -iE "cpu die|current pressure"'
+alias ta='tmux a'
+alias tm='tmux'
 
 # browser-sync config
 # get the current local IP adress
