@@ -1,7 +1,7 @@
 # ~/.zshrc file for zsh non-login shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
-setopt autocd              # change directory just by typing its name
+#setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
 setopt ksharrays           # arrays start at 0
@@ -13,14 +13,15 @@ setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
+export EDITOR='vim --clean'
+
+#LANG variable
+export LANG=en_US.UTF-8
+
 # hide EOL sign ('%')
 export PROMPT_EOL_MARK=""
 
 # configure key keybindings
-set -o vi
-bindkey -v
-bindkey "^?" backward-delete-char
-
 # bindkey -e                                        # emacs key bindings
 # bindkey ' ' magic-space                           # do history expansion on space
 # bindkey '^[[3;5~' kill-word                       # ctrl + Supr
@@ -31,12 +32,25 @@ bindkey "^?" backward-delete-char
 # bindkey '^[[5~' beginning-of-buffer-or-history    # page up
 # bindkey '^[[6~' end-of-buffer-or-history          # page down
 # bindkey '^[[Z' undo                               # shift + tab undo last action
+set -o vi
+bindkey -v
+bindkey "^?" backward-delete-char
+bindkey "^R" history-incremental-search-backward
 
 # enable completion features
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+zmodload zsh/complist
+_comp_options+=(globdots)
+
+# use vim keys in tab completion menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 
 # History configurations
 HISTFILE=~/.zsh_history
@@ -86,12 +100,18 @@ autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
-zstyle ':vcs_info:git:*' formats ' in branch %F{%(#.blue.green)}%b'
+zstyle ':vcs_info:git:*' formats ' in branch %B%F{%(#.yellow.yellow)}%b'
 
-
+# Python3 version
+py3v precmd() { python3 --version }
+ 
+# Rust version
+rustv precmd() { rustc --version | cut -d ' ' -f 2 }
 
 if [ "$color_prompt" = yes ]; then
-    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)──}(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+	#PROMPT=$'%F{%(#.blue.green)}┌──(%B%F{%(#.red.blue)}%n%(#.@.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]-(%F{reset}$(py3v)%F{%(#.blue.green)})-(%F{reset}Rust $(rustv)%F{%(#.blue.green)})\$vcs_info_msg_0_\n%F{%(#.blue.green)}└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
+    #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
+	PROMPT=$'%F{%(#.blue.blue)}┌──(%B%F{%(#.red.yellow)}%n%(#.@.㉿)%m%b%F{%(#.blue.blue)})-[%B%F{cyan}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.blue)}]-(%F{reset}$(py3v)%F{%(#.blue.blue)})-(%B%F{red}Rust $(rustv)%b%F{%(#.blue.blue)})\$vcs_info_msg_0_\n%F{%(#.blue.blue)}└─%B%(#.%F{red}#.%F{yellow}$)%b%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
     # enable syntax-highlighting
@@ -206,6 +226,15 @@ alias cl='clear'
 alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
+alias bat='bat --theme-ansi-dark'
+alias ta='tmux a'
+alias tm='tmux'
+
+# browser-sync config
+# get the current local IP adress
+# export SERVER_IP=`ipconfig getifaddr en0`
+# the command alias to start the browser-sync server
+alias serve="browser-sync start --server --files . --no-notify --port 9000"
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -216,8 +245,4 @@ fi
 
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
     source /etc/profile.d/vte-2.91.sh
-fi
-
-if [ -f /home/jarvistheai/.ssh/.addkey.sh ]; then
-    . /home/jarvistheai/.ssh/.addkey.sh
 fi
