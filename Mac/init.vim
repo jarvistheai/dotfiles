@@ -15,6 +15,7 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
+set nohlsearch
 set relativenumber
 set scrolloff=25
 set cmdheight=2
@@ -27,7 +28,7 @@ set splitright
 set cursorcolumn
 set cursorline
 set noignorecase
-map <esc> :noh<CR>
+"map <esc> :noh<CR>
 
 "Find and replace word under cursor
 noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
@@ -79,6 +80,7 @@ let g:gruvbox_invert_selection='0'
 
 colorscheme gruvbox
 set background=dark
+highlight Normal guibg=none
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
