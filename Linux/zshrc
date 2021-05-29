@@ -227,6 +227,7 @@ alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
 alias bat='bat --theme-ansi-dark'
+alias vim='nvim'
 alias ta='tmux a'
 alias tm='tmux'
 
