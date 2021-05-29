@@ -80,7 +80,7 @@ let g:gruvbox_invert_selection='0'
 
 colorscheme gruvbox
 set background=dark
-highlight Normal guibg=none
+highlight Normal ctermbg=none guibg=none
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
