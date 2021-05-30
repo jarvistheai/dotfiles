@@ -1,0 +1,129 @@
+syntax enable
+
+set nocompatible
+set showcmd
+" set guicursor=
+set noerrorbells
+setglobal tabstop=4 softtabstop=4
+setglobal shiftwidth=4
+set expandtab
+set smartindent
+set nu
+set linebreak
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set nohlsearch
+set relativenumber
+set scrolloff=25
+set cmdheight=2
+set nowrap
+set hidden
+set ruler
+set shortmess+=c
+"set splitbelow
+set splitright
+set cursorcolumn
+set cursorline
+set noignorecase
+"map <esc> :noh<CR>
+
+"Find and replace word under cursor
+noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
+
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,space:.
+set list
+"Toggle set list on/off
+noremap <F5> :set list!<CR>
+
+let g:mapleader = "\<Space>"
+
+set updatetime=50
+filetype plugin indent on
+set laststatus=2
+
+set colorcolumn=80
+highlight ColorColumn ctermbg=1 guibg=lightgrey
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo -S tee > /dev/null %
+
+" insert new line in normal mode
+nnoremap <Leader>o o<Esc>
+nnoremap <Leader>O O<Esc>
+
+"Buffers
+nnoremap <leader>n :bn<CR>
+nnoremap <leader>p :bp<CR>
+
+"Window switching
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+tnoremap <leader>h <C-\><C-n> :wincmd h<CR>
+tnoremap <leader>j <C-\><C-n> :wincmd j<CR>
+tnoremap <leader>k <C-\><C-n> :wincmd k<CR>
+tnoremap <leader>l <C-\><C-n> :wincmd l<CR>
+
+"Exit terminal mode
+tnoremap <leader>q <C-\><C-n>
+
+"Open terminal
+nnoremap <leader>t :belowright 25sp term://zsh<CR>
+
+"Resizing Window
+nnoremap <Leader>] :vertical resize +5<CR>
+nnoremap <Leader>[ :vertical resize -5<CR>
+nnoremap <leader>} :resize +5<CR>
+nnoremap <leader>{ :resize -5<CR>
+nnoremap <leader>r :resize 30<CR>
+
+"Splitting windows
+noremap <Leader>- :<C-u>split<CR>
+noremap <Leader>\ :<C-u>vsplit<CR>
+
+" FINDING FILES:
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+" Display all matching files when we tab complete
+set wildmenu
+" NOW WE CAN:
+" - Hit tab to :find by partial match
+" - Use * to make it fuzzy
+" THINGS TO CONSIDER:
+" - :b lets you autocomplete any open buffer
+
+" TAG JUMPING:
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .
+" NOW WE CAN:
+" - Use ^] to jump to tag under cursor
+" - Use g^] for ambiguous tags
+" - Use ^t to jump back up the tag stack
+
+" AUTOCOMPLETE:
+" The good stuff is documented in |ins-completion|
+" HIGHLIGHTS:
+" - ^x^n for JUST this file
+" - ^x^f for filenames (works with our path trick!)
+" - ^x^] for tags only
+" - ^n for anything specified by the 'complete' option
+" NOW WE CAN:
+" - Use ^n and ^p to go back and forth in the suggestion list
+
+" FILE BROWSING:
+" Tweaks for browsing
+let g:netrw_banner=0        " disable annoying banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+" NOW WE CAN:
+" - :edit a folder to open a file browser
+" - <CR>/v/t to open in an h-split/v-split/tab
+" - check |netrw-browse-maps| for more mappings

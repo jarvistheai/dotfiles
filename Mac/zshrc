@@ -13,7 +13,7 @@ setopt promptsubst         # enable command substitution in prompt
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
-export EDITOR='vim --clean'
+export EDITOR='vim -u ~/.config/nvim/vimrc_wo_plugins'
 
 #LANG variable
 export LANG=en_US.UTF-8
@@ -214,6 +214,7 @@ alias bat='bat --theme=ansi-dark'
 alias hot='sudo powermetrics -n 1 -i 1 --sampler thermal,smc | grep -iE "cpu die|current pressure"'
 alias ta='tmux a'
 alias tm='tmux'
+alias svim='sudo vim -u ~/.config/nvim/vimrc_wo_plugins'
 
 # browser-sync config
 # get the current local IP adress
