@@ -67,10 +67,9 @@ filetype plugin indent on
 set laststatus=2
 
 set colorcolumn=80
-highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 " Gruvbox colorscheme
-let g:gruvbox_contrast_dark = 'hard'
+"let g:gruvbox_contrast_dark = 'hard'
 
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -81,6 +80,8 @@ let g:gruvbox_invert_selection='0'
 colorscheme gruvbox
 set background=dark
 highlight Normal ctermbg=none guibg=none
+
+highlight ColorColumn ctermbg=1 guibg=lightgrey
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
