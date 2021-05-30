@@ -230,6 +230,7 @@ alias bat='bat --theme-ansi-dark'
 alias vim='nvim'
 alias ta='tmux a'
 alias tm='tmux'
+alias svim='sudo vim --clean'
 
 # browser-sync config
 # get the current local IP adress
