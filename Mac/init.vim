@@ -33,6 +33,9 @@ set noignorecase
 "Find and replace word under cursor
 noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
 
+nnoremap <leader>/ /\<\><left><left>
+nnoremap <leader>? /\<\><left><left>
+
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,space:.
 set list
 "Toggle set list on/off
