@@ -30,11 +30,13 @@ set cursorline
 set noignorecase
 "map <esc> :noh<CR>
 
-"Find and replace word under cursor
-noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
+let g:mapleader = "\<Space>"
 
 nnoremap <leader>/ /\<\><left><left>
 nnoremap <leader>? /\<\><left><left>
+
+"Find and replace word under cursor
+noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
 
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<,space:.
 set list
@@ -56,8 +58,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'preservim/nerdcommenter'
 call plug#end()
-
-let g:mapleader = "\<Space>"
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
