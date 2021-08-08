@@ -28,6 +28,7 @@ set splitright
 set cursorcolumn
 set cursorline
 set noignorecase
+set backspace=indent,eol,start
 "map <esc> :noh<CR>
 
 "Find and replace word under cursor
