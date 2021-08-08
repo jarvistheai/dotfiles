@@ -26,7 +26,7 @@ set splitright
 set cursorcolumn
 set cursorline
 set noignorecase
-set completeopt=menuone,noselect
+set completeopt=menuone,noselect,noinsert
 set updatetime=50
 set laststatus=2
 set colorcolumn=80
