@@ -7,6 +7,7 @@ setglobal tabstop=4 softtabstop=4
 setglobal shiftwidth=4
 set expandtab
 set smartindent
+filetype indent on
 set nu
 set linebreak
 set noswapfile
@@ -40,6 +41,7 @@ let g:mapleader = "\<Space>"
 call plug#begin()
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+Plug 'L3MON4D3/LuaSnip'
 Plug 'rust-lang/rust.vim'
 Plug 'preservim/nerdtree'
 Plug 'mattn/emmet-vim'
@@ -67,13 +69,15 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 let g:gruvbox_invert_selection='0'
+let g:gruvbox_invert_indent_guides='1'
+let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 "set background=dark
-highlight Normal ctermbg=none guibg=none
+"highlight Normal ctermbg=none guibg=none
 highlight ColorColumn ctermbg=1 guibg=lightgrey
-highlight CursorLineNr ctermbg=black
-highlight CursorLine ctermbg=black
-highlight CursorColumn ctermbg=black
+"highlight CursorLineNr ctermbg=black
+"highlight CursorLine ctermbg=grey
+"highlight CursorColumn ctermbg=black
 
 " Emmet Leader key
 let g:user_emmet_leader_key=','

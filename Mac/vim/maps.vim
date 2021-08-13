@@ -42,5 +42,8 @@ nnoremap <leader>? /\<\><left><left>
 "Find and replace word under cursor
 noremap <F4> *:%s///gc \| noh<left><left><left><left><left><left><left><left><left>
 
+"Find and replace selected text
+vnoremap <F3> "py:%s/<C-r>p//gc \| noh<left><left><left><left><left><left><left><left><left>
+
 "Toggle set list on/off
 noremap <F5> :set list!<CR>
