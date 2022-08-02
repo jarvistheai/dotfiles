@@ -76,6 +76,9 @@ colorscheme gruvbox
 set background=dark
 highlight Normal ctermbg=none guibg=none
 highlight ColorColumn ctermbg=1 guibg=lightgrey
+highlight CursorLineNr ctermbg=black
+highlight CursorLine ctermbg=black
+highlight CursorColumn ctermbg=black
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee % > /dev/null
