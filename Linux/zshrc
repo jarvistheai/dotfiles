@@ -226,11 +226,13 @@ alias cl='clear'
 alias ..='cd ..'
 alias py='python3'
 alias lolfetch='neofetch | lolcat'
-alias bat='bat --theme-ansi-dark'
+alias bat='batcat'
 alias vim='nvim'
 alias ta='tmux a'
 alias tm='tmux'
 alias svim='sudo vim -u ~/.config/nvim/vimrc_wo_plugins'
+alias matrix='cmatrix -Bu 7 -C yellow'
+alias valg='valgrind'
 
 # browser-sync config
 # get the current local IP adress
